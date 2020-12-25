@@ -1,28 +1,25 @@
 language: node_js
 node_js:
-  - 12 # uses version 12
+- 12
 services:
-  - postgresql # starts up postgres
+- postgresql
 addons:
-  postgresql: '9.6' # highest available postgres version on Travis
-dist: trusty # uses trusty environment
-sudo: false # when on trusty, uses Docker containers for speed
+  postgresql: '9.6'
+dist: trusty
+sudo: false
 notifications:
   email:
-    on_success: change # default: change (only when going from broken to fixed)
-    on_failure: always # default: always (which is annoying, as it should be)
+    on_success: change
+    on_failure: always
 install:
-  - npm ci # faster, goes only from package-lock
+- npm ci
 before_script:
-  - psql -c 'create database "deployment-exercise-one-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
-before_deploy: # omit node_modules, since we set skip_cleanup below
-  - rm -rf node_modules
-deploy: # see README for details on these keys
-  # prevents travis from deleting the build
+- psql -c 'create database "deployment-exercise-one-test";' -U postgres
+before_deploy:
+- rm -rf node_modules
+deploy:
   skip_cleanup: true
   provider: heroku
-  # app should be your heroku app name; see README
   app: deployment-exercise-one
-  # the secure key indicates an encrypted value; see README
   api_key:
-    secure: VmUTfMmHlTDyyA+FGlkOHR8K20Jsp/FOuWgbwkxkX/6mSyMK65KUqkU8RNpqh6Q+GSsAlSbPMud84TwiLYS6hnszdlpXQ9/gSzw4S1aSLDJBMV8bLcOL26RGt3vve975fREYvH/Sy7f3DUqDp/IG9+1jlGyT8aPCpCQvfxx384gqaTXYbjio6by1BWMaXxWBMrSfS0OKUOy3nY70XQHhhokqUkiZKNGFODWEuuHrYVp92c7PI76avlS/x/1YDv081dH33g/wzC77ffzEzDuE59B+xU2DSzIMwDa8+L116X+POkx0ypEfRZXU+igNEzxz3mVRrA+74XO7YMID2hS6WMMDOha9baR5BlvCFPdPukCeC+rqAwPw+cRNTorc+Y4ayvKbaCJweRS9TdC4Wsa7G1Q2PaEfde46VBAuOHgkcFZdQbxBrUINB5/WBo7iu8IXfQELmEhG4b/jJUmNaqAAji2QaKLRjpqy0jBO48XmNdP07r8FVkfrfelz9AEkERI9XRobezwpVs9wa44ynhvJ5VhO9Ei7YTvtCtoHXWrm9XM7JFcNs2W6th2TmYbS6vE13OeFP5pffxEJBUclZhFAAKE3+0XrbVdH1BGoCdwt8Knrf9WwmUby4Dk4ZIVMOy2kqdrdTqOEtCgzqzDh3oOmGHgrCt7n1nHsLP++x5z0tac=
+    secure: aYHj4h9Vf/e5KllWlPBTQR0h5BTJYpNj3T7TlM7k/Cqwca8pAyzUqFx3cjLrM1hq4DwtzHmjUoYCUb1tHJyNChwCDSBvqnKchGrGpbUgPRj8/vJPmX6xJzwZVAf0gMIMX75sVPRGqthTprx/kR6PRq6V94CwarJrFwuWeowTCmsjzIQ+2DCR9KURLVK8AJbLbWiu/wRDEUV6JCoQ6AegWcj6e645hLAfDGgNMAVKnO9BYvc5vQB7Y3Ut1fkSLgSFVctxrPvRoSWUWyFlkmNzJomUuF8eIrF5WcvTegCZPaPu7GD4eW5l738gPRMmTaZWZgBdIB8oMvYSmJJnGQAT4Ug3SKS/K6sgE2PDxAUGORpQiuShmyficEqmS03Z8XD79GZgQdc+kSkLk5orHvLYcxYU3eezgpeNatyCXv/4onhlAPtrYsA32+qNer622UVG93KpE3OKKUJwkDKjhYnkFBqERIB+Ca/bgppXE/PTqyeO/qxeXLhNONJzJEOTEmqutcZc7YXe3NHW9FxYBWJSB0ooqAt/EAUaid+Sv/y6n3QTf8zJWefRQcnr1Ffh02AuoG8MSIkFQp0WPWjsK4IsAYMwTLodt0/UyiZzJnZBSXx9FcTdWA6//0KxgHZZqjT54fK5Z8zpyDsS/alyE2p+dKwX5B11ZBPTB2S/EjTE9S0=

@@ -17,6 +17,9 @@ before_script:
 - psql -c 'create database "deployment-exercise-one-test";' -U postgres
 before_deploy:
 - rm -rf node_modules
+script:
+  - npm test # test the code
+  - npm run build-client # make the bundle
 deploy:
   skip_cleanup: true
   provider: heroku
